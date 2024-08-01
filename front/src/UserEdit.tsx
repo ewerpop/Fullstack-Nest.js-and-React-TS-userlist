@@ -4,10 +4,11 @@ import {useState} from 'react'
 import { actionsKind } from './App';
 import { useGlobalReducerContext } from './App';
 import { dataTypes } from './App';
+import axios from 'axios';
 
 interface props {
-    onClick: () => void,
-    user: dataTypes
+    onClick: (action: boolean) => void,
+    user: dataTypes,
 }
 
 export default function UserEdit({ onClick, user }: props) {
@@ -24,13 +25,33 @@ export default function UserEdit({ onClick, user }: props) {
     function onSubmit(e: any): void {
         e.preventDefault()
         if (sex === 'true') {
+            axios.post('http://127.0.0.1:3001/userEdit', {
+                id: user.id,
+                name,
+                lastName,
+                age,
+                height,
+                place,
+                weight,
+                sex: true
+            })
             dispatch({type: actionsKind.EDIT, payload: {id: user.id, name, lastName, age, height, place, weight, sex: true}})
         } else if (sex === 'false') {
+            axios.post('http://127.0.0.1:3001/userEdit', {
+                id: user.id,
+                name,
+                lastName,
+                age,
+                height,
+                place,
+                weight,
+                sex: false
+            })
             dispatch({type: actionsKind.EDIT, payload: {id: user.id, name, lastName, age, height, place, weight, sex: false}})
         } else {
             console.error('Undefined sex')
         }
-        onClick()
+        onClick(true)
     }
     return (
         <Card style={{ width: '18rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

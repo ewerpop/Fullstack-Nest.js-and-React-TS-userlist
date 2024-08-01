@@ -4,12 +4,16 @@ import UserEdit from './UserEdit';
 import { dataTypes } from './App';
 
 interface props {
-    user: dataTypes
+    user: dataTypes,
+    handleClick?: () => void
 }
 
-export default function UserCard({user}: props) {
+export default function UserCard({user, handleClick}: props) {
     const [edit, setEdit] = useState<boolean>(false)
-    function onClick(): void {
+    function onClick(action: boolean): void {
+        if(action && handleClick) {
+            handleClick()
+        }
         setEdit((e) => !e)
     }
     if (edit) {

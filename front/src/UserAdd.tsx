@@ -2,8 +2,12 @@ import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 import { useState } from 'react';
 import { actionsKind, useGlobalReducerContext } from "./App";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; 
 
 export default function UserAdd() {
+    const navigation = useNavigate()
+
     const [name, setName] = useState<string>('')
     const [sex, setSex] = useState<string>('true')
     const [lastName, setLastName] = useState<string>('')
@@ -17,12 +21,31 @@ export default function UserAdd() {
     function onSubmit(e: any): void {
         e.preventDefault()
         if (sex === 'true') {
-            dispatch({type: actionsKind.ADD, payload: {id: Date.now(), name, lastName, age, height, place, weight, sex: true}})
+            axios.post('http://127.0.0.1:3001/userAdd', {
+                name,
+                lastName,
+                age,
+                height,
+                place,
+                weight,
+                sex: true
+            })
+             .then((res) => dispatch({type: actionsKind.ADD, payload: {id: res.data, name, lastName, age, height, place, weight, sex: true}}))
         } else if (sex === 'false') {
-            dispatch({type: actionsKind.ADD, payload: {id: Date.now(), name, lastName, age, height, place, weight, sex: false}})
+            axios.post('http://127.0.0.1:3001/userAdd', {
+                name,
+                lastName,
+                age,
+                height,
+                place,
+                weight,
+                sex: false
+            })
+            .then((res) => dispatch({type: actionsKind.ADD, payload: {id: res.data, name, lastName, age, height, place, weight, sex: false}}))
         } else {
             console.error('Undefined sex')
         }
+        navigation('/')
     }
 
     return (

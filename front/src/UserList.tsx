@@ -1,69 +1,91 @@
-import UserCard from "./UserCard"  
-import { useGlobalReducerContext } from "./App";
+import UserCard from "./UserCard"
+import { actionsKind, useGlobalReducerContext } from "./App";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Spinner from 'react-bootstrap/Spinner';
+import ReactPaginate from 'react-paginate';
 
 export default function UserList() {
-    // const initialState = [{ id: 1, name: 'Vadim', lastName: 'Ver', age: 16, height: 186, place: 'Kazan', weight: 65 }, { id: 1, name: 'Vadimasdf', lastName: 'Ver3333', age: 11, height: 186, place: 'Kazan', weight: 65 }]
-    // enum actionsKind {
-    //     ADD = 'ADD',
-    //     DELETE = 'DELETE',
-    //     EDIT = 'EDIT'
-    // }
-    // interface dataTypes {
-    //     id: number,
-    //     name: string,
-    //     lastName: string,
-    //     age: number,
-    //     height: number,
-    //     place: string,
-    //     weight: number
-    // }
+    const { state, dispatch } = useGlobalReducerContext()
+    const [loading, setLoading] = useState<boolean>(true)
+    const [count, setCount] = useState<number>(0)
+    const [currentPage, setCurrentPage] = useState<number>(0)
 
-    // interface actions {
-    //     type: actionsKind;
-    //     payload?: dataTypes;
-    // }
+    const elementsOnPage = 3
 
-    // function reducer(state: dataTypes[], action: actions): dataTypes[] {
-    //     const { type, payload } = action
-    //     switch (type) {
-    //         case actionsKind.ADD:
-    //             if (payload) {
-    //                 return state.concat([{ id: Date.now(), name: payload.name, lastName: payload.lastName, age: payload.age, height: payload.height, place: payload.place, weight: payload.weight }])
-    //             }
-    //             break;
-    //         case actionsKind.DELETE:
-    //             if (payload) {
-    //                 return state.filter((e) => e.id !== payload.id)
-    //             }
-    //             break
-    //         case actionsKind.EDIT:
-    //             if (payload) {
-    //                 return state.map((e) => e.id === payload.id ? { ...e, ...payload } : e)
-    //             }
-    //             break
-    //         default:
-    //             console.error('undefined reducer action')
-    //     }
-    //     return state
-    // }
+    useEffect(() => {
+        axios.post('http://127.0.0.1:3001/userGet', {
+            currentPage: 0,
+            elementsOnPage: elementsOnPage
+        })
+            .then((res) => res.data)
+            .then((result) => dispatch({ type: actionsKind.LOAD, payload: { newState: result } }))
+            .then(() => setLoading(false))
+    }, [])
 
-    // const [state, dispatch] = useReducer(reducer, initialState)
+    useEffect(() => {
+        console.log(currentPage)
+        axios.get('http://127.0.0.1:3001/userCount')
+            .then(res => res.data)
+            .then(result => setCount(Math.ceil(result / elementsOnPage)))
+    }, [state])
 
-    const {state} = useGlobalReducerContext()
 
+    function handlePageClick(e: any) {
+        setCurrentPage(e.selected)
+        axios.post('http://127.0.0.1:3001/userGet', {
+            currentPage: Number(e.selected),
+            elementsOnPage: elementsOnPage
+        })
+            .then(res => res.data)
+            .then(result => dispatch({ type: actionsKind.LOAD, payload: { newState: result } }))
+    }
+
+    if (loading) {
+        return (
+            <main>
+                <Spinner animation="border" />
+            </main>
+        )
+    }
     return (
-        <main className="main">
-            <ul>
-            {state.map((e) => {
-                return (
-                    <li key={e.id}>
-                        <UserCard user={e}/>
-                    </li>
-                )
-            })
-            }
-            </ul>
-        </main>
+        <>
+            <main className="main">
+                <ul>
+                    {state.map((e) => {
+                        return (
+                            <li key={e.id}>
+                                <UserCard user={e} />
+                            </li>
+                        )
+                    })
+                    }
+                </ul>
+            </main>
+            <footer className="main">
+                <ReactPaginate
+                    nextLabel="next >"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={2}
+                    pageCount={count}
+                    previousLabel="< previous"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                    renderOnZeroPageCount={null}
+                />
+            </footer>
+        </>
+
 
     )
 }

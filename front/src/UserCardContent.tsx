@@ -3,9 +3,10 @@ import Table from 'react-bootstrap/Table';
 import { dataTypes } from './App';
 import { actionsKind } from './App';
 import { useGlobalReducerContext } from './App';
+import axios from 'axios';
 
 interface props {
-    onClick: () => void,
+    onClick: (action: boolean) => void,
     user: dataTypes
 }
 
@@ -14,7 +15,11 @@ export default function UserCardContent({ onClick, user }: props) {
     const {dispatch} = useGlobalReducerContext()
 
     function handleClick() {
+        axios.post('http://127.0.0.1:3001/userDelete', {
+            id: Number(user.id)
+        })
         dispatch({type: actionsKind.DELETE, payload: {id: user.id}})
+        onClick(true)
     }
 
     return (
@@ -45,7 +50,7 @@ export default function UserCardContent({ onClick, user }: props) {
                         <h5 className='userAge'>{user.age}</h5>
                 </footer>   
                 <button id='editButtonLeft' className="btn btn-danger" onClick={() => handleClick()}>Удалить</button>
-                <button id='editButton' className="btn btn-primary" onClick={() => onClick()}>Изменить</button>
+                <button id='editButton' className="btn btn-primary" onClick={() => onClick(false)}>Изменить</button>
             </Card.Body>
         </Card>
     )

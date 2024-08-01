@@ -6,11 +6,13 @@ import UserAdd from './UserAdd'
 import NavBar from './NavBar'
 import { useContext, useReducer } from 'react'
 import { createContext } from 'react'
+import UserById from './UserById'
 
 const initialState = [{ id: 1, name: 'Vadim', lastName: 'Ver', age: 16, height: 186, place: 'Kazan', weight: 65, sex: true }, { id: 2, name: 'Vadimasdf', lastName: 'Ver3333', age: 11, height: 186, place: 'Kazan', weight: 65, sex: false }]
 
 export interface dataTypes {
-  id: number,
+  id?: number,
+  newState?: any,
   name?: string,
   lastName?: string,
   age?: number,
@@ -22,7 +24,8 @@ export interface dataTypes {
 export enum actionsKind {
   ADD = 'ADD',
   DELETE = 'DELETE',
-  EDIT = 'EDIT'
+  EDIT = 'EDIT',
+  LOAD = 'LOAD'
 }
 
 interface actions {
@@ -48,7 +51,7 @@ function App() {
         switch (type) {
             case actionsKind.ADD:
                 if (payload) {
-                    return state.concat([{ id: Date.now(), name: payload.name, lastName: payload.lastName, age: payload.age, height: payload.height, place: payload.place, weight: payload.weight, sex: payload.sex }])
+                    return state.concat([{ id: payload.id, name: payload.name, lastName: payload.lastName, age: payload.age, height: payload.height, place: payload.place, weight: payload.weight, sex: payload.sex }])
                 }
                 break;
             case actionsKind.DELETE:
@@ -61,6 +64,11 @@ function App() {
                     return state.map((e) => e.id === payload.id ? { ...payload } : e)
                 }
                 break
+            case actionsKind.LOAD:
+                  if (payload) {
+                    return payload.newState
+                  } 
+                  break
             default:
                 console.error('undefined reducer action')
         }
@@ -77,6 +85,7 @@ function App() {
         <Route path='/' element={<UserList />} />
         <Route path='/addUser' element={<UserAdd />} />
         <Route path='*' element={<NoPage />} />
+        <Route path='/userById' element={<UserById />} />
       </Routes>
     </GlobalReducerContext.Provider>
     </>
