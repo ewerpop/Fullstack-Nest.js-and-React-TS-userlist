@@ -9,7 +9,6 @@ export default function UserList() {
     const { state, dispatch } = useGlobalReducerContext()
     const [loading, setLoading] = useState<boolean>(true)
     const [count, setCount] = useState<number>(0)
-    const [currentPage, setCurrentPage] = useState<number>(0)
 
     const elementsOnPage = 3
 
@@ -24,7 +23,6 @@ export default function UserList() {
     }, [])
 
     useEffect(() => {
-        console.log(currentPage)
         axios.get('http://127.0.0.1:3001/userCount')
             .then(res => res.data)
             .then(result => setCount(Math.ceil(result / elementsOnPage)))
@@ -32,7 +30,6 @@ export default function UserList() {
 
 
     function handlePageClick(e: any) {
-        setCurrentPage(e.selected)
         axios.post('http://127.0.0.1:3001/userGet', {
             currentPage: Number(e.selected),
             elementsOnPage: elementsOnPage
@@ -54,7 +51,7 @@ export default function UserList() {
                 <ul>
                     {state.map((e) => {
                         return (
-                            <li key={e.id}>
+                            <li key={e.id} className="listEl">
                                 <UserCard user={e} />
                             </li>
                         )

@@ -19,4 +19,5 @@ model user {
   place String @default("Kazan")
   weight Int @default(70)
   sex Boolean @default(true)
+  image String
 }

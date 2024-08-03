@@ -4,6 +4,15 @@
   text-align: center;
 }
 
+tbody {
+  width: 100%;
+  padding: 0px;
+}
+
+table {
+  width: 100%;
+}
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -13,6 +22,7 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
 input[type="number"]:hover,
 input[type="number"]:focus {
   -moz-appearance: number-input;
@@ -39,6 +49,11 @@ select {
   appearance: none;
 }
 
+.placeTd {
+  padding-left: 0px;
+  padding-right: 7px;
+}
+
 th {
   align-items: center;
   text-align: center;
@@ -63,6 +78,13 @@ li {
   margin-right: 8%;
 }
 
+.listEl {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .nameField {
   display: flex;
   align-items: center;
@@ -72,9 +94,11 @@ li {
 }
 
 .editUser {
-  width: 91%;
+  width: 106%;
   height: 10%;
+  font-size: 13.7px
 }
+
 
 .editUserBottom {
   width: 60%;
@@ -93,9 +117,11 @@ li {
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -104,6 +130,7 @@ li {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

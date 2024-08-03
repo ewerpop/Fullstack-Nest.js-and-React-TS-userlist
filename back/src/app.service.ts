@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DtoFind, DtoPagin, DtoValid } from './dto/create.dto';
+import { DtoCreate, DtoFind, DtoPagin, DtoValid } from './dto/create.dto';
 import { DatabaseService } from './database/database.service';
 
 @Injectable()
@@ -9,9 +9,16 @@ export class AppService {
     return 'Hello World!';
   }
   async save(dto: DtoValid) {
-    return this.databaseService.user.create({
-      data: dto
+    if (dto.sex) {
+      return this.databaseService.user.create({
+      data: {...dto, age: Number(dto.age), height: Number(dto.height), weight: Number(dto.weight), sex: true}
     })
+    } else {
+      return this.databaseService.user.create({
+        data: {...dto, age: Number(dto.age), height: Number(dto.height), weight: Number(dto.weight), sex: false}
+      })
+    }
+    
   }
   async delete(dto: DtoFind) {
     return this.databaseService.user.delete({
@@ -20,7 +27,7 @@ export class AppService {
       }
     })
   }
-  async update(dto: DtoValid) {
+  async update(dto: DtoCreate) {
     return this.databaseService.user.update({
       where: {
         id: Number(dto.id)
@@ -28,11 +35,11 @@ export class AppService {
       data: {
         name: dto.name,
         lastName: dto.lastName,
-        age: dto.age,
+        age: Number(dto.age),
         sex: dto.sex,
         place: dto.place,
-        height: dto.height,
-        weight: dto.weight
+        height: Number(dto.height),
+        weight: Number(dto.weight)
       }
     })
   }
@@ -41,11 +48,16 @@ export class AppService {
   }
 
   async select(dto: DtoFind) {
-    return this.databaseService.user.findUnique({
+    let res = this.databaseService.user.findUnique({
       where: {
         id: Number(dto.id)
       }
     })
+    if (res) {
+      return res
+    } else {
+      return undefined
+    }
   }
   
   async paginLoad(dto: DtoPagin) {

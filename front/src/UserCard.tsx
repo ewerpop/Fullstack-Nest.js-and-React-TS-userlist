@@ -8,21 +8,21 @@ interface props {
     handleClick?: () => void
 }
 
-export default function UserCard({user, handleClick}: props) {
+export default function UserCard({ user, handleClick }: props) {
     const [edit, setEdit] = useState<boolean>(false)
     function onClick(action: boolean): void {
-        if(action && handleClick) {
+        if (action && handleClick) {
             handleClick()
         }
         setEdit((e) => !e)
     }
     if (edit) {
         return (
-            <UserEdit user={user} onClick={onClick}/>
+            <UserEdit user={user} onClick={onClick} />
         )
     } else {
         return (
-            <UserCardContent user={user} onClick={onClick}/>
+            <UserCardContent user={user} onClick={onClick} />
         )
     }
 

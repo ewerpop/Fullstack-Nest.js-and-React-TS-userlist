@@ -12,21 +12,22 @@ interface props {
 
 export default function UserCardContent({ onClick, user }: props) {
 
-    const {dispatch} = useGlobalReducerContext()
+    const { dispatch } = useGlobalReducerContext()
+    const imageSrc = `../images/${user.image}`
 
     function handleClick() {
         axios.post('http://127.0.0.1:3001/userDelete', {
             id: Number(user.id)
         })
-        dispatch({type: actionsKind.DELETE, payload: {id: user.id}})
+        dispatch({ type: actionsKind.DELETE, payload: { id: user.id } })
         onClick(true)
     }
 
     return (
-        <Card style={{ width: '18rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Card.Img variant="top" src="holder.js/100px180" />
+        <Card style={{ width: '320px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Card.Img variant="top" src={imageSrc} style={{ backgroundColor: 'red', width: '220px', height: '140px' }} />
             <Card.Body>
-                <Card.Title>{user.name}<br/>{user.lastName}</Card.Title>
+                <Card.Title>{user.name}<br />{user.lastName}</Card.Title>
                 <Table striped bordered hover size="sm">
                     <thead>
                         <tr>
@@ -46,9 +47,9 @@ export default function UserCardContent({ onClick, user }: props) {
                     </tbody>
                 </Table>
                 <footer className='cardBottom'>
-                        <h5>Возраст</h5>
-                        <h5 className='userAge'>{user.age}</h5>
-                </footer>   
+                    <h5>Возраст</h5>
+                    <h5 className='userAge'>{user.age}</h5>
+                </footer>
                 <button id='editButtonLeft' className="btn btn-danger" onClick={() => handleClick()}>Удалить</button>
                 <button id='editButton' className="btn btn-primary" onClick={() => onClick(false)}>Изменить</button>
             </Card.Body>

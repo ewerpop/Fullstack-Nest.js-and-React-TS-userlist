@@ -19,7 +19,8 @@ export interface dataTypes {
   height?: number,
   place?: string,
   weight?: number,
-  sex?: boolean
+  sex?: boolean,
+  image?: string
 }
 export enum actionsKind {
   ADD = 'ADD',
@@ -40,54 +41,54 @@ type ReducerContent = {
 
 const GlobalReducerContext = createContext<ReducerContent>({
   state: initialState,
-  dispatch: () => {}
+  dispatch: () => { }
 })
 
 export const useGlobalReducerContext = () => useContext(GlobalReducerContext)
 
 function App() {
-    function reducer(state: dataTypes[], action: actions): dataTypes[] {
-        const { type, payload } = action
-        switch (type) {
-            case actionsKind.ADD:
-                if (payload) {
-                    return state.concat([{ id: payload.id, name: payload.name, lastName: payload.lastName, age: payload.age, height: payload.height, place: payload.place, weight: payload.weight, sex: payload.sex }])
-                }
-                break;
-            case actionsKind.DELETE:
-                if (payload) {
-                    return state.filter((e) => e.id !== payload.id)
-                }
-                break
-            case actionsKind.EDIT:
-                if (payload) {
-                    return state.map((e) => e.id === payload.id ? { ...payload } : e)
-                }
-                break
-            case actionsKind.LOAD:
-                  if (payload) {
-                    return payload.newState
-                  } 
-                  break
-            default:
-                console.error('undefined reducer action')
+  function reducer(state: dataTypes[], action: actions): dataTypes[] {
+    const { type, payload } = action
+    switch (type) {
+      case actionsKind.ADD:
+        if (payload) {
+          return state.concat([{ id: payload.id, name: payload.name, lastName: payload.lastName, age: payload.age, height: payload.height, place: payload.place, weight: payload.weight, sex: payload.sex, image: payload.image }])
         }
-        return state
+        break;
+      case actionsKind.DELETE:
+        if (payload) {
+          return state.filter((e) => e.id !== payload.id)
+        }
+        break
+      case actionsKind.EDIT:
+        if (payload) {
+          return state.map((e) => e.id === payload.id ? { ...payload } : e)
+        }
+        break
+      case actionsKind.LOAD:
+        if (payload) {
+          return payload.newState
+        }
+        break
+      default:
+        console.error('undefined reducer action')
     }
+    return state
+  }
 
-    const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
     <>
-    <GlobalReducerContext.Provider value={{state, dispatch}}>
-      <NavBar/>
-      <Routes>
-        <Route path='/' element={<UserList />} />
-        <Route path='/addUser' element={<UserAdd />} />
-        <Route path='*' element={<NoPage />} />
-        <Route path='/userById' element={<UserById />} />
-      </Routes>
-    </GlobalReducerContext.Provider>
+      <GlobalReducerContext.Provider value={{ state, dispatch }}>
+        <NavBar />
+        <Routes>
+          <Route path='/' element={<UserList />} />
+          <Route path='/addUser' element={<UserAdd />} />
+          <Route path='*' element={<NoPage />} />
+          <Route path='/userById' element={<UserById />} />
+        </Routes>
+      </GlobalReducerContext.Provider>
     </>
   )
 }

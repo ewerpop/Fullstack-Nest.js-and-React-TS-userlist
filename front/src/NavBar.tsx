@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 
 export default function NavBar() {
     return (
-        <Navbar style={{marginBottom: '2%', width: '100%'}} bg="primary" data-bs-theme="dark">
+        <Navbar style={{ marginBottom: '2%', width: '100%' }} bg="primary" data-bs-theme="dark">
             <Container>
                 <Navbar.Brand>PeopleDB</Navbar.Brand>
                 <Nav className="me-auto">
