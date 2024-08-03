@@ -13,7 +13,7 @@ export default function UserList() {
     const elementsOnPage = 3
 
     useEffect(() => {
-        axios.post('http://127.0.0.1:3001/userGet', {
+        axios.post('/userGet', {
             currentPage: 0,
             elementsOnPage: elementsOnPage
         })
@@ -23,14 +23,14 @@ export default function UserList() {
     }, [])
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:3001/userCount')
+        axios.get('/userCount')
             .then(res => res.data)
             .then(result => setCount(Math.ceil(result / elementsOnPage)))
     }, [state])
 
 
     function handlePageClick(e: any) {
-        axios.post('http://127.0.0.1:3001/userGet', {
+        axios.post('/userGet', {
             currentPage: Number(e.selected),
             elementsOnPage: elementsOnPage
         })

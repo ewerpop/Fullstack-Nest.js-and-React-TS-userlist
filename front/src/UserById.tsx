@@ -16,7 +16,7 @@ export default function UserById() {
 
     function onSubmit(e: any) {
         e.preventDefault()
-        axios.post('http://127.0.0.1:3001/userById', {
+        axios.post('/userById', {
             id
         })
             .then(res => {

@@ -13,10 +13,10 @@ interface props {
 export default function UserCardContent({ onClick, user }: props) {
 
     const { dispatch } = useGlobalReducerContext()
-    const imageSrc = `../images/${user.image}`
+    const imageSrc = `/images/${user.image}`
 
     function handleClick() {
-        axios.post('http://127.0.0.1:3001/userDelete', {
+        axios.post('/userDelete', {
             id: Number(user.id)
         })
         dispatch({ type: actionsKind.DELETE, payload: { id: user.id } })

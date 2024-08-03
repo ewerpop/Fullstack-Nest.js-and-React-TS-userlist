@@ -21,12 +21,12 @@ export default function UserEdit({ onClick, user }: props) {
     const [age, setAge] = useState<number | undefined>(user.age)
 
     const { dispatch } = useGlobalReducerContext()
-    const imageSrc = `../images/${user.image}`
+    const imageSrc = `/images/${user.image}`
 
     function onSubmit(e: any): void {
         e.preventDefault()
         if (sex === 'true') {
-            axios.post('http://127.0.0.1:3001/userEdit', {
+            axios.post('/userEdit', {
                 id: user.id,
                 name,
                 lastName,
@@ -34,11 +34,12 @@ export default function UserEdit({ onClick, user }: props) {
                 height,
                 place,
                 weight,
-                sex: true
+                sex: true,
+                image: user.image
             })
             dispatch({ type: actionsKind.EDIT, payload: { id: user.id, name, lastName, age, height, place, weight, sex: true } })
         } else if (sex === 'false') {
-            axios.post('http://127.0.0.1:3001/userEdit', {
+            axios.post('/userEdit', {
                 id: user.id,
                 name,
                 lastName,
@@ -46,7 +47,8 @@ export default function UserEdit({ onClick, user }: props) {
                 height,
                 place,
                 weight,
-                sex: false
+                sex: false,
+                image: user.image
             })
             dispatch({ type: actionsKind.EDIT, payload: { id: user.id, name, lastName, age, height, place, weight, sex: false } })
         } else {

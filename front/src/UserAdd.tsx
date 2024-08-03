@@ -30,7 +30,7 @@ export default function UserAdd() {
         e.preventDefault()
         if (image) {
             if (sex === 'true') {
-                axios.post('http://127.0.0.1:3001/userAdd', {
+                axios.post('/userAdd', {
                     name,
                     lastName,
                     age,
@@ -46,7 +46,7 @@ export default function UserAdd() {
                 })
                     .then((res) => dispatch({ type: actionsKind.ADD, payload: { id: res.data.id, name, lastName, age, height, place, weight, sex: true, image: res.data.image } }))
             } else if (sex === 'false') {
-                axios.post('http://127.0.0.1:3001/userAdd', {
+                axios.post('/userAdd', {
                     name,
                     lastName,
                     age,
