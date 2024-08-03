@@ -25,7 +25,7 @@ export default function UserCardContent({ onClick, user }: props) {
 
     return (
         <Card style={{ width: '320px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Card.Img variant="top" src={imageSrc} style={{ backgroundColor: 'red', width: '220px', height: '140px' }} />
+            <Card.Img variant="top" src={imageSrc} style={{ width: '220px', height: '140px' }} />
             <Card.Body>
                 <Card.Title>{user.name}<br />{user.lastName}</Card.Title>
                 <Table striped bordered hover size="sm">
