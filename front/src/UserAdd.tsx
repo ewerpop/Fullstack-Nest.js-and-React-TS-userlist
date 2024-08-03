@@ -87,8 +87,8 @@ export default function UserAdd() {
                     <input onChange={handleImageChange} accept="image/png, image/jpeg, image/jpg" className="form-control form-control-sm" type="file" id="formFile" />
                     <Card.Body>
                         <Card.Title><ul className='nameField'>
-                            <li><input value={name} onChange={(e) => setName(e.target.value)} className='editUserName' /></li>
-                            <li><input value={lastName} onChange={(e) => setLastName(e.target.value)} className='editUserName' /></li>
+                            <li><input placeholder='Введите имя' value={name} onChange={(e) => setName(e.target.value)} className='editUserName' /></li>
+                            <li><input placeholder='Введите фамилию' value={lastName} onChange={(e) => setLastName(e.target.value)} className='editUserName' /></li>
                         </ul></Card.Title>
                         <Table striped bordered hover size="sm">
                             <thead>

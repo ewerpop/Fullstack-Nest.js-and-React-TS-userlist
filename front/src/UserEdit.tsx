@@ -25,7 +25,7 @@ export default function UserEdit({ onClick, user }: props) {
 
     function onSubmit(e: any): void {
         e.preventDefault()
-        if (sex === 'true') {
+        if (sex === 'true') {           
             axios.post('/userEdit', {
                 id: user.id,
                 name,
@@ -37,7 +37,7 @@ export default function UserEdit({ onClick, user }: props) {
                 sex: true,
                 image: user.image
             })
-            dispatch({ type: actionsKind.EDIT, payload: { id: user.id, name, lastName, age, height, place, weight, sex: true } })
+            dispatch({ type: actionsKind.EDIT, payload: { id: user.id, name, lastName, age, height, place, weight, sex: true, image: user.image } })
         } else if (sex === 'false') {
             axios.post('/userEdit', {
                 id: user.id,
@@ -50,7 +50,7 @@ export default function UserEdit({ onClick, user }: props) {
                 sex: false,
                 image: user.image
             })
-            dispatch({ type: actionsKind.EDIT, payload: { id: user.id, name, lastName, age, height, place, weight, sex: false } })
+            dispatch({ type: actionsKind.EDIT, payload: { id: user.id, name, lastName, age, height, place, weight, sex: false, image: user.image } })
         } else {
             console.error('Undefined sex')
         }
@@ -62,8 +62,8 @@ export default function UserEdit({ onClick, user }: props) {
             <Card.Body>
                 <form onSubmit={onSubmit}>
                     <Card.Title><ul className='nameField'>
-                        <li><input value={name} onChange={(e) => setName(e.target.value)} className='editUserName' /></li>
-                        <li><input value={lastName} onChange={(e) => setLastName(e.target.value)} className='editUserName' /></li>
+                        <li><input placeholder='Введите имя' value={name} onChange={(e) => setName(e.target.value)} className='editUserName' /></li>
+                        <li><input placeholder='Введите фамилию' value={lastName} onChange={(e) => setLastName(e.target.value)} className='editUserName' /></li>
                     </ul></Card.Title>
                     <Table striped bordered hover size="sm">
                         <thead>
