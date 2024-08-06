@@ -1,5 +1,5 @@
 import { AppService } from './app.service';
-import { DtoFind, DtoPagin, DtoValid, DtoCreate } from './dto/create.dto';
+import { DtoFind, DtoPagin, DtoValid, DtoCreate, DtoDelete } from './dto/create.dto';
 export declare class AppController {
     private readonly appService;
     constructor(appService: AppService);
@@ -30,7 +30,7 @@ export declare class AppController {
         id: number;
         image: string;
     }>;
-    delete(dto: DtoFind): Promise<{
+    delete(dto: DtoDelete): Promise<{
         id: number;
         name: string;
         lastName: string;

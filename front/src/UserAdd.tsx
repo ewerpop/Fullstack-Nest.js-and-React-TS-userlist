@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { actionsKind, useGlobalReducerContext } from "./App";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import slugify from 'slugify';
 
 export default function UserAdd() {
     const navigation = useNavigate()
@@ -26,6 +27,10 @@ export default function UserAdd() {
         }
     }
 
+    if(image) {
+        console.log(slugify(image.name))
+    }
+
     function onSubmit(e: any): void {
         e.preventDefault()
         if (image) {
@@ -38,7 +43,8 @@ export default function UserAdd() {
                     place,
                     weight,
                     sex: true,
-                    image
+                    image: image,
+                    imageName: slugify(image.name)
                 }, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
@@ -54,7 +60,8 @@ export default function UserAdd() {
                     place,
                     weight,
                     sex: '',
-                    image
+                    image,
+                    imageName: slugify(image.name)
                 }, {
                     headers: {
                         'Content-Type': 'multipart/form-data',

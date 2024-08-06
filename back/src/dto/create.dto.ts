@@ -30,6 +30,9 @@ export class DtoCreate {
 
     @IsBoolean()
     sex: boolean;
+
+    @IsString()
+    imageName: string
 }
 export class DtoValid {
     @IsInt()
@@ -63,12 +66,24 @@ export class DtoValid {
     sex: boolean;
 
     image: any;
+
+    @IsString()
+    imageName: string
 }
 
 export class DtoFind {
     @IsInt()
     @Min(0)
     id: number
+}
+
+export class DtoDelete {
+    @IsInt()
+    @Min(0)
+    id: number
+
+    @IsString()
+    image: string
 }
 
 export class DtoPagin {

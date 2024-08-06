@@ -1,4 +1,4 @@
-import { DtoCreate, DtoFind, DtoPagin, DtoValid } from './dto/create.dto';
+import { DtoCreate, DtoDelete, DtoFind, DtoPagin, DtoValid } from './dto/create.dto';
 import { DatabaseService } from './database/database.service';
 export declare class AppService {
     private readonly databaseService;
@@ -15,7 +15,7 @@ export declare class AppService {
         sex: boolean;
         image: string;
     }>;
-    delete(dto: DtoFind): Promise<{
+    delete(dto: DtoDelete): Promise<{
         id: number;
         name: string;
         lastName: string;

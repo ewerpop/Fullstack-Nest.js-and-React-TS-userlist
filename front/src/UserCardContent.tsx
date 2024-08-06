@@ -4,6 +4,7 @@ import { dataTypes } from './App';
 import { actionsKind } from './App';
 import { useGlobalReducerContext } from './App';
 import axios from 'axios';
+import slugify from 'slugify';
 
 interface props {
     onClick: (action: boolean) => void,
@@ -17,7 +18,8 @@ export default function UserCardContent({ onClick, user }: props) {
 
     function handleClick() {
         axios.post('/userDelete', {
-            id: Number(user.id)
+            id: Number(user.id),
+            image: String(slugify(String(user.image)))
         })
         dispatch({ type: actionsKind.DELETE, payload: { id: user.id } })
         onClick(true)

@@ -78,7 +78,7 @@ li {
   margin-right: 8%;
 }
 
-.listEl {
+#listEl {
   display: flex;
   justify-content: center;
   align-items: center;

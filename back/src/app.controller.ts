@@ -1,10 +1,11 @@
 import { Controller, Get, Post, Body, BadRequestException, UsePipes, ValidationPipe, Res, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { AppService } from './app.service';
-import { DtoFind, DtoPagin, DtoValid, DtoCreate } from './dto/create.dto';
+import { DtoFind, DtoPagin, DtoValid, DtoCreate, DtoDelete } from './dto/create.dto';
 import * as shortid from 'shortid';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as fs from 'fs';
 import * as path from 'path';
+import slugify from 'slugify'
 
 @Controller()
 export class AppController {
@@ -40,7 +41,10 @@ export class AppController {
     if (!fs.existsSync(uploadsDir)) {
       fs.mkdirSync(uploadsDir);
     }
-    const newFileName = `${shortid.generate()}-${image.originalname}`
+
+    console.log(dto.imageName)
+
+    const newFileName = `${shortid.generate()}-${String(dto.imageName)}`
     const newFilePath = path.join(uploadsDir, newFileName);
 
     fs.writeFileSync(newFilePath, image.buffer);
@@ -50,7 +54,14 @@ export class AppController {
   }
   
   @Post('userDelete')
-  async delete(@Body() dto: DtoFind) {
+  async delete(@Body() dto: DtoDelete) {
+    
+    const delDir = path.join(__dirname, '..', 'images')
+    const filePath = path.join(delDir, dto.image)
+    console.log(filePath)
+    fs.unlink(filePath, (e) => {
+      if (e) console.error(e)
+    })
     return await this.appService.delete(dto) 
   }
 
