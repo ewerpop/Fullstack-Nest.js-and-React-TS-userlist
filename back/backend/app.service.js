@@ -21,20 +21,22 @@ let AppService = class AppService {
     }
     async save(dto) {
         if (dto.sex) {
+            const dtoVal = { age: Number(dto.age), height: Number(dto.height), weight: Number(dto.weight), sex: true, image: dto.image, name: dto.name, lastName: dto.lastName, place: dto.place };
             return this.databaseService.user.create({
-                data: { ...dto, age: Number(dto.age), height: Number(dto.height), weight: Number(dto.weight), sex: true }
+                data: dtoVal
             });
         }
         else {
+            const dtoVal = { age: Number(dto.age), height: Number(dto.height), weight: Number(dto.weight), sex: false, image: dto.image, name: dto.name, lastName: dto.lastName, place: dto.place };
             return this.databaseService.user.create({
-                data: { ...dto, age: Number(dto.age), height: Number(dto.height), weight: Number(dto.weight), sex: false }
+                data: dtoVal
             });
         }
     }
     async delete(dto) {
         return this.databaseService.user.delete({
             where: {
-                id: Number(dto.id)
+                id: Number(dto.id),
             }
         });
     }

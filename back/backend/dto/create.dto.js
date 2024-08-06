@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DtoPagin = exports.DtoFind = exports.DtoValid = exports.DtoCreate = void 0;
+exports.DtoPagin = exports.DtoDelete = exports.DtoFind = exports.DtoValid = exports.DtoCreate = void 0;
 const class_validator_1 = require("class-validator");
 class DtoCreate {
 }
@@ -52,6 +52,10 @@ __decorate([
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
 ], DtoCreate.prototype, "sex", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], DtoCreate.prototype, "imageName", void 0);
 class DtoValid {
 }
 exports.DtoValid = DtoValid;
@@ -93,6 +97,10 @@ __decorate([
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
 ], DtoValid.prototype, "sex", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], DtoValid.prototype, "imageName", void 0);
 class DtoFind {
 }
 exports.DtoFind = DtoFind;
@@ -101,6 +109,18 @@ __decorate([
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
 ], DtoFind.prototype, "id", void 0);
+class DtoDelete {
+}
+exports.DtoDelete = DtoDelete;
+__decorate([
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.Min)(0),
+    __metadata("design:type", Number)
+], DtoDelete.prototype, "id", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], DtoDelete.prototype, "image", void 0);
 class DtoPagin {
 }
 exports.DtoPagin = DtoPagin;

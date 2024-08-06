@@ -10,7 +10,7 @@ export default function UserList() {
     const [loading, setLoading] = useState<boolean>(true)
     const [count, setCount] = useState<number>(0)
 
-    const elementsOnPage = 3
+    const elementsOnPage = 6
 
     useEffect(() => {
         axios.post('/userGet', {
@@ -48,16 +48,19 @@ export default function UserList() {
     return (
         <>
             <main className="main">
-                <ul>
-                    {state.map((e) => {
-                        return (
-                            <li key={e.id} className="listEl">
-                                <UserCard user={e} />
-                            </li>
-                        )
-                    })
-                    }
-                </ul>
+                <div className="container">
+                    <div className="row">
+                        {state.map((e) => {
+                            return (
+                                <div key={e.id} id="listEl" className="col">
+                                    <UserCard user={e} />
+                                </div>
+                            )
+                        })
+                        }
+                    </div>
+
+                </div>
             </main>
             <footer className="main">
                 <ReactPaginate

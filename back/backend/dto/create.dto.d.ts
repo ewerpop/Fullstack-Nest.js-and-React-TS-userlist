@@ -7,6 +7,7 @@ export declare class DtoCreate {
     place: string;
     weight: number;
     sex: boolean;
+    imageName: string;
 }
 export declare class DtoValid {
     id: number;
@@ -18,9 +19,14 @@ export declare class DtoValid {
     weight: number;
     sex: boolean;
     image: any;
+    imageName: string;
 }
 export declare class DtoFind {
     id: number;
+}
+export declare class DtoDelete {
+    id: number;
+    image: string;
 }
 export declare class DtoPagin {
     currentPage: number;

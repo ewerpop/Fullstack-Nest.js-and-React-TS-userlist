@@ -47,13 +47,21 @@ let AppController = class AppController {
         if (!fs.existsSync(uploadsDir)) {
             fs.mkdirSync(uploadsDir);
         }
-        const newFileName = `${shortid.generate()}-${image.originalname}`;
+        console.log(dto.imageName);
+        const newFileName = `${shortid.generate()}-${String(dto.imageName)}`;
         const newFilePath = path.join(uploadsDir, newFileName);
         fs.writeFileSync(newFilePath, image.buffer);
         const res = await this.appService.save({ ...dto, image: newFileName });
         return { id: res.id, image: newFileName };
     }
     async delete(dto) {
+        const delDir = path.join(__dirname, '..', 'images');
+        const filePath = path.join(delDir, dto.image);
+        console.log(filePath);
+        fs.unlink(filePath, (e) => {
+            if (e)
+                console.error(e);
+        });
         return await this.appService.delete(dto);
     }
     async update(dto) {
@@ -94,7 +102,7 @@ __decorate([
     (0, common_1.Post)('userDelete'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_dto_1.DtoFind]),
+    __metadata("design:paramtypes", [create_dto_1.DtoDelete]),
     __metadata("design:returntype", Promise)
 ], AppController.prototype, "delete", null);
 __decorate([

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DtoCreate, DtoFind, DtoPagin, DtoValid } from './dto/create.dto';
+import { DtoCreate, DtoDelete, DtoFind, DtoPagin, DtoValid } from './dto/create.dto';
 import { DatabaseService } from './database/database.service';
 
 @Injectable()
@@ -9,21 +9,24 @@ export class AppService {
     return 'Hello World!';
   }
   async save(dto: DtoValid) {
+    
     if (dto.sex) {
+      const dtoVal = {age: Number(dto.age), height: Number(dto.height), weight: Number(dto.weight), sex: true, image: dto.image, name: dto.name, lastName: dto.lastName, place: dto.place}  
       return this.databaseService.user.create({
-      data: {...dto, age: Number(dto.age), height: Number(dto.height), weight: Number(dto.weight), sex: true}
+      data: dtoVal
     })
     } else {
+      const dtoVal = {age: Number(dto.age), height: Number(dto.height), weight: Number(dto.weight), sex: false, image: dto.image, name: dto.name, lastName: dto.lastName, place: dto.place}
       return this.databaseService.user.create({
-        data: {...dto, age: Number(dto.age), height: Number(dto.height), weight: Number(dto.weight), sex: false}
+        data: dtoVal
       })
     }
     
   }
-  async delete(dto: DtoFind) {
+  async delete(dto: DtoDelete) {
     return this.databaseService.user.delete({
       where: {
-        id: Number(dto.id)
+        id: Number(dto.id),
       }
     })
   }
