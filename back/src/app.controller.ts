@@ -42,8 +42,6 @@ export class AppController {
       fs.mkdirSync(uploadsDir);
     }
 
-    console.log(dto.imageName)
-
     const newFileName = `${shortid.generate()}-${String(dto.imageName)}`
     const newFilePath = path.join(uploadsDir, newFileName);
 
@@ -58,7 +56,6 @@ export class AppController {
     
     const delDir = path.join(__dirname, '..', 'images')
     const filePath = path.join(delDir, dto.image)
-    console.log(filePath)
     fs.unlink(filePath, (e) => {
       if (e) console.error(e)
     })
